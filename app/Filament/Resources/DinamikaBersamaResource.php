@@ -3,15 +3,11 @@
 namespace App\Filament\Resources;
 
 use App\Filament\Resources\DinamikaBersamaResource\Pages;
-use App\Filament\Resources\DinamikaBersamaResource\RelationManagers;
 use App\Models\Dinamika_Bersama;
-use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\RichEditor;
 use Filament\Forms\Components\DatePicker;
@@ -31,7 +27,7 @@ class DinamikaBersamaResource extends Resource
                 TextInput::make('judul')
                     ->required()
                     ->label('Judul'),
-                
+
                 FileUpload::make('poster')
                     ->label('Poster')
                     ->image()

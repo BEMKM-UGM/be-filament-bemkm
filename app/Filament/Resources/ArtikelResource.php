@@ -11,6 +11,7 @@ use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
 use Filament\Forms\Components\FileUpload;
+use Filament\Tables\Columns\ImageColumn;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 
@@ -25,29 +26,29 @@ class ArtikelResource extends Resource
         return $form
             ->schema([
                 Forms\Components\TextInput::make('judul')
-                ->required(),
-            
-            Forms\Components\DatePicker::make('tgl_publish')
-                ->label('Tanggal Publish'),
+                    ->required(),
 
-            Forms\Components\TextInput::make('dirjen')
-                ->label('Dirjen'),
+                Forms\Components\DatePicker::make('tgl_publish')
+                    ->label('Tanggal Publish'),
 
-            Forms\Components\RichEditor::make('deskripsi')
-                ->label('Deskripsi'),
+                Forms\Components\TextInput::make('dirjen')
+                    ->label('Dirjen'),
 
-            Forms\Components\TextInput::make('kementrian')
-                ->label('Kementrian'),
+                Forms\Components\RichEditor::make('deskripsi')
+                    ->label('Deskripsi'),
 
-            FileUpload::make('gambar')
-                ->label('Gambar')
-                ->multiple()
-                ->directory('gambar')
-                ->image() 
-                ->maxSize(2048),
-            
-            Forms\Components\RichEditor::make('referensi')
-                ->label('Referensi'),
+                Forms\Components\TextInput::make('kementrian')
+                    ->label('Kementrian'),
+
+                FileUpload::make('gambar')
+                    ->disk('public')
+                    ->label('Gambar')
+                    ->directory('artikel')
+                    ->image()
+                    ->maxSize(2048),
+
+                Forms\Components\RichEditor::make('referensi')
+                    ->label('Referensi'),
             ]);
     }
 
@@ -56,6 +57,7 @@ class ArtikelResource extends Resource
         return $table
             ->columns([
                 Tables\Columns\TextColumn::make('id')->label('ID'),
+                ImageColumn::make('gambar')->label('Gambar'),
                 Tables\Columns\TextColumn::make('judul')->label('Judul'),
                 Tables\Columns\TextColumn::make('dirjen')->label('Dirjen'),
                 Tables\Columns\TextColumn::make('kementrian')->label('Kementerian'),
@@ -66,6 +68,7 @@ class ArtikelResource extends Resource
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),
+                Tables\Actions\DeleteAction::make(),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([

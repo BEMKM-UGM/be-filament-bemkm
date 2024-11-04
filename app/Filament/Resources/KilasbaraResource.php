@@ -3,7 +3,6 @@
 namespace App\Filament\Resources;
 
 use App\Filament\Resources\KilasbaraResource\Pages;
-use App\Filament\Resources\KilasbaraResource\RelationManagers;
 use App\Models\Kilasbara;
 use Filament\Forms;
 use Filament\Forms\Form;
@@ -11,8 +10,6 @@ use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
 use Filament\Forms\Components\FileUpload;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
 
 class KilasbaraResource extends Resource
 {
@@ -25,30 +22,30 @@ class KilasbaraResource extends Resource
         return $form
             ->schema([
                 Forms\Components\TextInput::make('judul')
-                ->required()
-                ->label('Judul'),
-            
-            Forms\Components\DatePicker::make('tgl_publish')
-                ->label('Tanggal Publish'),
+                    ->required()
+                    ->label('Judul'),
 
-            Forms\Components\TextInput::make('dirjen')
-                ->label('Dirjen'),
+                Forms\Components\DatePicker::make('tgl_publish')
+                    ->label('Tanggal Publish'),
 
-            Forms\Components\RichEditor::make('deskripsi')
-                ->label('Deskripsi'),
+                Forms\Components\TextInput::make('dirjen')
+                    ->label('Dirjen'),
 
-            Forms\Components\TextInput::make('kementrian')
-                ->label('Kementrian'),
+                Forms\Components\RichEditor::make('deskripsi')
+                    ->label('Deskripsi'),
 
-            FileUpload::make('gambar')
-                ->label('Gambar')
-                ->multiple()
-                ->directory('gambar') 
-                ->image() 
-                ->maxSize(2048), 
+                Forms\Components\TextInput::make('kementrian')
+                    ->label('Kementrian'),
 
-            Forms\Components\RichEditor::make('referensi')
-                ->label('Referensi'),
+                FileUpload::make('gambar')
+                    ->disk('public')
+                    ->label('Gambar')
+                    ->directory('kilasbara')
+                    ->image()
+                    ->maxSize(2048),
+
+                Forms\Components\RichEditor::make('referensi')
+                    ->label('Referensi'),
             ]);
     }
 
@@ -57,20 +54,20 @@ class KilasbaraResource extends Resource
         return $table
             ->columns([
                 Tables\Columns\TextColumn::make('id')
-                ->label('ID'),
+                    ->label('ID'),
 
-            Tables\Columns\TextColumn::make('judul')
-                ->label('Judul'),
+                Tables\Columns\TextColumn::make('judul')
+                    ->label('Judul'),
 
-            Tables\Columns\TextColumn::make('dirjen')
-                ->label('Dirjen'),
+                Tables\Columns\TextColumn::make('dirjen')
+                    ->label('Dirjen'),
 
-            Tables\Columns\TextColumn::make('kementrian')
-                ->label('Kementrian'),
+                Tables\Columns\TextColumn::make('kementrian')
+                    ->label('Kementrian'),
 
-            Tables\Columns\TextColumn::make('tgl_publish')
-                ->label('Tanggal Publish')
-                ->date(),
+                Tables\Columns\TextColumn::make('tgl_publish')
+                    ->label('Tanggal Publish')
+                    ->date(),
             ])
             ->filters([
                 //
